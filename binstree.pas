@@ -10,7 +10,7 @@ END;
 
 VAR root : Tree;
 VAR tn : Tree;
-VAR gw : Integer;
+VAR gw, trh : Integer;
 
 PROCEDURE MkTreeNode(w : Integer; VAR t : Tree);
 VAR pp : Tree;
@@ -48,6 +48,23 @@ BEGIN
 		t := n;
 END;
 
+FUNCTION TreeHeight(rt : Tree) : Integer;
+VAR lh, rh, hh : Integer;
+BEGIN
+    IF rt = NIL THEN
+        hh := 0
+    ELSE
+    BEGIN
+        lh := TreeHeight(rt^.left);
+        rh := TreeHeight(rt^.right);
+        IF lh >= rh THEN
+            hh := 1 + lh
+        ELSE
+            hh := 1 + rh
+    END;
+    TreeHeight := hh
+END;
+
 PROCEDURE PrintTree(indent : String; l : Integer; t : Tree);
 BEGIN
 	IF t <> NIL THEN
@@ -76,5 +93,7 @@ BEGIN
 	gw := 2;
 	MkTreeNode(gw, tn);
 	InsertNode(tn, root);
-	PrintTree('	', 1, root)
+	PrintTree('	', 1, root);
+    trh := TreeHeight(root);
+    Writeln('height of the tree: ', trh)
 END.
