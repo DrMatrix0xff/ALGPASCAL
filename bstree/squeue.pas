@@ -4,8 +4,8 @@ INTERFACE
 
 USES deftypes;
 PROCEDURE InitQueue(VAR q : Queue);
-PROCEDURE EnQueue(VAR tn : Tree; q : Queue);
-PROCEDURE DeQueue(VAR q : Queue; tn : Tree);
+PROCEDURE EnQueue(VAR tn : Tree; VAR q : Queue);
+PROCEDURE DeQueue(VAR q : Queue; VAR tn : Tree);
 FUNCTION IsQueueEmpty(VAR q : Queue) : Boolean;
 
 IMPLEMENTATION
@@ -25,10 +25,11 @@ BEGIN
     IsQueueEmpty := (q.size = 0);
 END;
 
-PROCEDURE EnQueue(VAR tn : Tree; q : Queue);
+PROCEDURE EnQueue(VAR tn : Tree; VAR q : Queue);
 VAR p, t : ElemPtr;
 BEGIN
     p := NIL;
+    t := NIL;
     New(p);
     IF Assigned(p) THEN
     BEGIN
@@ -51,10 +52,11 @@ BEGIN
         t^.next := p;
         q.backend := p;
     END;
-    Inc(q.size)
+    Inc(q.size);
+    Writeln('after enter queue, new size: ', q.size)
 END;
 
-PROCEDURE DeQueue(VAR q : Queue; tn : Tree);
+PROCEDURE DeQueue(VAR q : Queue; VAR tn : Tree);
 VAR p : ElemPtr;
 BEGIN
     IF (q.front = NIL) AND (q.backend = NIL) THEN
@@ -72,9 +74,9 @@ BEGIN
             p := (q.front)^.next;
             q.front := p
         END;
-        Dec(q.size)
+        Dec(q.size);
+        Writeln('after depart queue, new size: ', q.size)
     END
 END;
 
 END.
-
