@@ -1,99 +1,99 @@
-PROGRAM BINTREEDEMO;
-TYPE
+program BINTREEDEMO;
+type
 Tree = ^TreeNode;
-TreeNode = RECORD
-	weight : Integer;
-	count : Integer;
-	left : Tree;
-	right : Tree
-END;
+TreeNode = record
+  weight : integer;
+  count : integer;
+  left : Tree;
+  right : Tree
+end;
 
-VAR root : Tree;
-VAR tn : Tree;
-VAR gw, trh : Integer;
+var root : Tree;
+var tn : Tree;
+var gw, trh : integer;
 
-PROCEDURE MkTreeNode(w : Integer; VAR t : Tree);
-VAR pp : Tree;
-BEGIN
-	New(pp);
-	WITH pp^ DO
-	BEGIN
-		weight := w;
-		count := 1;
-		left := NIL;
-		right := NIL
-	END;
-	t := pp
-END;
+procedure MkTreeNode(w : integer; var t : Tree);
+var pp : Tree;
+begin
+  new(pp);
+  with pp^ do
+  begin
+    weight := w;
+    count := 1;
+    left := nil;
+    right := nil
+  end;
+  t := pp
+end;
 
 (* insert new node n to the binary search tree specified by t. *)
-PROCEDURE InsertNode(n : Tree; VAR t : Tree);
-VAR tw : Integer;
-BEGIN
-	IF t <> NIL THEN
-	BEGIN
-		tw := t^.weight;
-		IF tw = n^.weight THEN
-		BEGIN
-			Inc(t^.count);
-			Dispose(n)
-		END
-		ELSE
-			IF tw > n^.weight THEN
-				InsertNode(n, t^.left)
-			ELSE
-				InsertNode(n, t^.right);
-	END
-	ELSE
-		t := n;
-END;
+procedure InsertNode(n : Tree; var t : Tree);
+var tw : integer;
+begin
+  if t <> nil then
+  begin
+    tw := t^.weight;
+    if tw = n^.weight then
+    begin
+      inc(t^.count);
+      dispose(n)
+    end
+    else
+      if tw > n^.weight then
+        InsertNode(n, t^.left)
+      else
+        InsertNode(n, t^.right);
+  end
+  else
+    t := n;
+end;
 
-FUNCTION TreeHeight(rt : Tree) : Integer;
-VAR lh, rh, hh : Integer;
-BEGIN
-    IF rt = NIL THEN
-        hh := 0
-    ELSE
-    BEGIN
-        lh := TreeHeight(rt^.left);
-        rh := TreeHeight(rt^.right);
-        IF lh >= rh THEN
-            hh := 1 + lh
-        ELSE
-            hh := 1 + rh
-    END;
-    TreeHeight := hh
-END;
+function TreeHeight(rt : Tree) : integer;
+var lh, rh, hh : integer;
+begin
+  if rt = nil then
+    hh := 0
+  else
+  begin
+    lh := TreeHeight(rt^.left);
+    rh := TreeHeight(rt^.right);
+    if lh >= rh then
+      hh := 1 + lh
+    else
+      hh := 1 + rh
+  end;
+  TreeHeight := hh
+end;
 
-PROCEDURE PrintTree(indent : String; l : Integer; t : Tree);
-BEGIN
-	IF t <> NIL THEN
-	BEGIN
-		Writeln(indent, 'weight: ', t^.weight, ' count: ', t^.count, ' @ line: ', l);
-		PrintTree(indent, l+1, t^.left);
-		PrintTree(indent + indent, l+1, t^.right)
-	END
-END;
+procedure PrintTree(indent : string; l : integer; t : Tree);
+begin
+  if t <> nil then
+  begin
+    writeln(indent, 'weight: ', t^.weight, ' count: ', t^.count, ' @ line: ', l);
+    PrintTree(indent, l+1, t^.left);
+    PrintTree(indent + indent, l+1, t^.right)
+  end
+end;
 
-BEGIN
-	root := NIL;
-	tn := NIL;
-	gw := 4;
-	MkTreeNode(gw, tn);
-	InsertNode(tn, root);
-	gw := 2;
-	MkTreeNode(gw, tn);
-	InsertNode(tn, root);
-	gw := 3;
-	MkTreeNode(gw, tn);
-	InsertNode(tn, root);
-	gw := 5;
-	MkTreeNode(gw, tn);
-	InsertNode(tn, root);
-	gw := 2;
-	MkTreeNode(gw, tn);
-	InsertNode(tn, root);
-	PrintTree('	', 1, root);
-    trh := TreeHeight(root);
-    Writeln('height of the tree: ', trh)
-END.
+begin
+  root := nil;
+  tn := nil;
+  gw := 4;
+  MkTreeNode(gw, tn);
+  InsertNode(tn, root);
+  gw := 2;
+  MkTreeNode(gw, tn);
+  InsertNode(tn, root);
+  gw := 3;
+  MkTreeNode(gw, tn);
+  InsertNode(tn, root);
+  gw := 5;
+  MkTreeNode(gw, tn);
+  InsertNode(tn, root);
+  gw := 2;
+  MkTreeNode(gw, tn);
+  InsertNode(tn, root);
+  PrintTree('  ', 1, root);
+  trh := TreeHeight(root);
+  writeln('height of the tree: ', trh)
+end.

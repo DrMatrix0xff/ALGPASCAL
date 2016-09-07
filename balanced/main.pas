@@ -19,26 +19,26 @@ END;
 BEGIN
     flag := TRUE;
     root := NIL;
-    gk := 'elisp';
-    gi := 40;
+    gk := 'python';
+    gi := 85;
     InsertAvlTree(gk, gi, root, flag);
     gk := 'hello';
     gi := 1989;
     InsertAvlTree(gk, gi, root, flag);
-    gk := 'python';
-    gi := 85;
+    gk := 'fortran';
+    gi := 10;
     InsertAvlTree(gk, gi, root, flag);
     gk := 'erlang';
     gi := 90;
     InsertAvlTree(gk, gi, root, flag);
-    gk := 'basic';
-    gi := 20;
-    InsertAvlTree(gk, gi, root, flag);
     gk := 'emacs';
     gi := 64;
     InsertAvlTree(gk, gi, root, flag);
-    gk := 'fortran';
-    gi := 10;
+    gk := 'elisp';
+    gi := 40;
+    InsertAvlTree(gk, gi, root, flag);
+    gk := 'basic';
+    gi := 20;
     InsertAvlTree(gk, gi, root, flag);
     PrintTree('  ', 1, root)
 END.

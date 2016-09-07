@@ -1,45 +1,20 @@
-all: hello basecal mysqrt slst catout binstree
 
-hello: hello.pas
-	@echo 'compile hello...'
-	fpc $^
+SRC = $(wildcard *.pas)
+OBJ = $(SRC:%.pas=%.o)
+BIN = $(SRC:%.pas=%)
 
-basecal: basecal.pas
-	@echo 'compile basecal...'
-	fpc $^
+%: %.pas
+	fpc $^ -o$@
 
-mysqrt: mysqrt.pas
-	@echo 'compile mysqrt...'
-	fpc $^
+%.o: %.pas
 
-# single list of Integers
-slst: slst.pas
-	@echo 'compile slst...'
-	fpc $^
+all: compile
 
-binstree: binstree.pas
-	@echo 'compile binstree...'
-	fpc $^
-
-catout: catout.pas
-	@echo 'compile catout...'
-	fpc $^
-
-test:
-	@echo 'running catout...'
-	./catout
-	@echo '\nrunning hello...'
-	./hello
-	@echo "\nrunning basecal..."
-	./basecal
-	@echo "\nrunning mysqrt..."
-	./mysqrt
-	@echo "\nrunning slst..."
-	./slst
-	@echo "\nrunning binstree..."
-	./binstree
+compile: $(BIN)
 
 clean:
-	/bin/rm -f hello mysqrt basecal slst binstree catout *.o
+	rm -f $(OBJ) $(BIN)
 
-.PHONY: test clean
+.PHONY: clean
+
+
